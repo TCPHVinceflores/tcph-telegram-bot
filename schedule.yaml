@@ -1,0 +1,97 @@
+# ============================================================
+#  TCPH Observation Channel — post schedule
+#  Edit this file to change what gets posted and when.
+#  Times are Philippine time (Asia/Manila), 24-hour format, in quotes.
+# ============================================================
+
+settings:
+  timezone: Asia/Manila
+  parse_mode: HTML          # lets you use <b>bold</b>, <i>italic</i>, <a href="...">links</a>
+  catch_up_minutes: 90      # if the bot runs late, still post up to 90 min after the set time
+  # chat_id: "@YourChannelUsername"   # optional; normally set as a secret instead
+
+# ------------------------------------------------------------
+#  Each post needs:  id (unique name), time, and text and/or photo
+#
+#  Optional fields:
+#    days:        daily | weekdays | weekends | [mon, wed, fri]   (default: daily)
+#    date:        "2026-11-05"      -> one-off post on that date only
+#    start_date / end_date          -> only run between these dates
+#    photo:       images/promo.jpg  (file in this folder) or an https:// link
+#                 (captions with a photo max out at 1024 characters)
+#    buttons:     list of {text, url} link buttons under the post
+#    pin:         true  -> pin the post after sending
+#    silent:      true  -> send without a notification sound
+#    link_preview: true -> show a preview card for links in the text
+#    enabled:     false -> pause this post without deleting it
+#
+#  The posts below are SAMPLES — replace the text with your own.
+# ------------------------------------------------------------
+
+posts:
+
+  - id: morning-outlook
+    time: "08:00"
+    days: weekdays
+    text: |
+      ☀️ <b>Good morning, TCPH traders!</b>
+
+      Asian session is open. Today's focus:
+      • Watch the key levels we marked yesterday
+      • Check the economic calendar before entering
+      • Risk only what you planned — no FOMO trades
+
+      Observation mode muna. Patience pays. 📊
+
+  - id: london-session
+    time: "16:00"
+    days: weekdays
+    silent: true
+    text: |
+      🇬🇧 <b>London session is now open.</b>
+      Volatility usually picks up from here — stick to your plan and your stop loss.
+
+  - id: new-york-session
+    time: "21:00"
+    days: weekdays
+    silent: true
+    text: |
+      🇺🇸 <b>New York session is coming up.</b>
+      Overlap hours = bigger moves. Mind the news releases. 📰
+
+  - id: weekly-recap-prompt
+    time: "10:00"
+    days: [sat]
+    text: |
+      📝 <b>Weekend review time</b>
+
+      Look back at your trades this week:
+      1. What setups worked?
+      2. Where did you break your rules?
+      3. What's your one improvement for next week?
+
+  - id: midas-promo
+    time: "19:00"
+    days: [wed]
+    # photo: images/midas-promo.jpg     # add your TCPH promo image here
+    text: |
+      🔥 <b>Midas Scalping Indicator</b> — our latest TradingView tool.
+      Message us to learn how it works.
+    buttons:
+      - text: "Message TCPH"
+        url: "https://t.me/YourUsername"
+
+  # Example one-off announcement (paused until you fill it in)
+  - id: community-move-announcement
+    enabled: false
+    date: "2026-11-01"
+    time: "12:00"
+    pin: true
+    text: |
+      📢 <b>Announcement</b>
+      We're moving to our new community home! Details here: <a href="https://example.com">link</a>
+
+# ------------------------------------------------------------
+#  Trading disclaimer reminder: trading forex involves risk.
+#  Avoid promising profits in posts.
+# ------------------------------------------------------------
