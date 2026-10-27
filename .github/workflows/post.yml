@@ -1,0 +1,45 @@
+name: Post scheduled Telegram messages
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: telegram-poster
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Post anything due
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python bot.py
+
+      - name: Save sent log
+        if: always()
+        run: |
+          if [ -n "$(git status --porcelain sent_log.json)" ]; then
+            git config user.name "tcph-bot"
+            git config user.email "tcph-bot@users.noreply.github.com"
+            git add sent_log.json
+            git commit -m "Update sent log"
+            git pull --rebase
+            git push
+          fi
